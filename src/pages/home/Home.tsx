@@ -1,88 +1,43 @@
 function Home() {
-    return (
-        <>
-            <div
-                style={{
-                    backgroundColor: "#312e81", 
-                    display: "flex",
-                    justifyContent: "center"
-                }}
-            >
-                <div
-                    style={{
-                        display: "grid",
-                        gridTemplateColumns: "1fr 1fr", 
-                        color: "white",
-                        width: "100%",
-                        maxWidth: "1280px", 
-                    }}
-                >
-                    <div
-                        style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "1rem", 
-                            alignItems: "center",
-                            justifyContent: "center",
-                            paddingTop: "1rem", 
-                            paddingBottom: "1rem"
-                        }}
-                    >
-                        <h2
-                            style={{
-                                fontSize: "3rem", 
-                                fontWeight: "bold"
-                            }}
-                        >
-                            Seja Bem Vinde!
-                        </h2>
+  return (
+    <>
+      <div className="bg-white flex justify-center items-center min-h-screen">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 
+                        max-w-6xl w-full px-6">
 
-                        <p
-                            style={{
-                                fontSize: "1.25rem" 
-                            }}
-                        >
-                            Expresse aqui seus pensamentos e opiniões
-                        </p>
+          <div className="flex flex-col gap-6 justify-center">
+            <h2 className="text-black text-6xl font-bold">
+              Seja Bem Vinde!
+            </h2>
 
-                        <div
-                            style={{
-                                display: "flex",
-                                justifyContent: "space-around",
-                                gap: "1rem"
-                            }}
-                        >
-                            <div
-                                style={{
-                                    borderRadius: "0.5rem",
-                                    color: "white",
-                                    border: "2px solid white",
-                                    padding: "0.5rem 1rem"
-                                }}
-                            >
-                                Nova Postagem
-                            </div>
-                        </div>
-                    </div>
+            <p className="text-black text-2xl">
+              Expresse aqui seus pensamentos e opiniões
+            </p>
 
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "center"
-                        }}
-                    >
-                        <img
-                            src="https://i.imgur.com/fyfri1v.png"
-                            alt="Imagem Página Home"
-                            style={{
-                                width: "66%"
-                            }}
-                        />
-                    </div>
-                </div>
+            <div>
+              <button
+                className="rounded text-black font-semibold
+                           border-black border-2 py-3 px-6
+                           hover:bg-black hover:text-white
+                           transition"
+              >
+                Nova Postagem
+              </button>
             </div>
-        </>
-    )
+          </div>
+
+          <div className="flex justify-center items-center">
+            <img
+              src="https://ik.imagekit.io/gcastro/imagemhome.jpg"
+              alt="Imagem Página Home"
+              className="w-3/4 max-w-md"
+            />
+          </div>
+
+        </div>
+      </div>
+    </>
+  )
 }
 
 export default Home
