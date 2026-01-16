@@ -4,12 +4,17 @@ import Navbar from './components/navbar/Navbar';
 import Home from './pages/home/Home';
 import Cadastro from './pages/cadastro/Cadastro';
 import Login from './pages/login/Login';
+import { AuthProvider } from './contexts/AuthContext'
+
 
 function App() {
   return (
     // Fragmento do React (<>): serve para envolver vários elementos sem criar uma <div> extra no HTML
     <>
-      {/* O BrowserRouter é o "pai" de todos: ele permite que a navegação aconteça no navegador */}
+
+    <AuthProvider> {/* provedor de autenticação */}
+
+      {/* Gerenciador de rotas: O BrowserRouter é o "pai" de todos: ele permite que a navegação aconteça no navegador */}
       <BrowserRouter>
         
         {/* A Navbar fica fora do <Routes> porque ela deve aparecer em TODAS as páginas */}
@@ -33,6 +38,7 @@ function App() {
         <Footer />
 
       </BrowserRouter>
+    </AuthProvider>
     </>
   )
 }
