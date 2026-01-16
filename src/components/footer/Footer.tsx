@@ -27,9 +27,13 @@ function Footer() {
           {/* Ícones das redes */}
           <div className="flex gap-2">
 
+            <a href="https://www.linkedin.com/in/gcastroalves/" target="_blank">
             <LinkedinLogoIcon size={48} weight="bold" />  {/* Ícone do LinkedIn */}
-            <GithubLogoIcon size={48} weight="bold" /> {/* Ícone do GitHub */}
+            </a>
 
+            <a href="https://github.com/gcastroalves" target="_blank">
+            <GithubLogoIcon size={48} weight="bold" /> {/* Ícone do GitHub */}
+            </a>
           </div>
         </div>
       </div>
