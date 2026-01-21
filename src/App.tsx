@@ -1,47 +1,71 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Footer from './components/footer/Footer';
-import Navbar from './components/navbar/Navbar';
-import Home from './pages/home/Home';
-import Cadastro from './pages/cadastro/Cadastro';
-import Login from './pages/login/Login';
-import { AuthProvider } from './contexts/AuthContext'
+// 1. Importa as ferramentas que vamos usar
+import { BrowserRouter, Route, Routes } from 'react-router-dom';         
+import Footer from './components/footer/Footer';                        
+import Navbar from './components/navbar/Navbar';                       
+import Home from './pages/home/Home';                                  
+import Cadastro from './pages/cadastro/Cadastro';                      
+import Login from './pages/login/Login';                               
+import { AuthProvider } from './contexts/AuthContext'                  
+import ListaTemas from './components/tema/listatemas/ListaTemas';
+import FormTema from './components/tema/formtema/FormTema'
+import DeletarTema from './components/tema/deletartema/DeletarTema';
+import ListaPostagens from './components/postagem/listapostagem/ListaPostagem';
+import FormPostagem from './components/postagem/formpostagem/FormPostagem';
 
 
+// Aqui começa a função principal (o "chefe" da aplicação)
 function App() {
   return (
-    // Fragmento do React (<>): serve para envolver vários elementos sem criar uma <div> extra no HTML
     <>
+      {/* O AuthProvider "embrulha" tudo → permite que TODAS as páginas saibam se a pessoa está logada */}
+      <AuthProvider>
 
-    <AuthProvider> {/* provedor de autenticação */}
+        {/* BrowserRouter → ativa o sistema de rotas (muda a página sem recarregar o site) */}
+        <BrowserRouter>
 
-      {/* Gerenciador de rotas: O BrowserRouter é o "pai" de todos: ele permite que a navegação aconteça no navegador */}
-      <BrowserRouter>
-        
-        {/* A Navbar fica fora do <Routes> porque ela deve aparecer em TODAS as páginas */}
-        <Navbar />
+          {/* Navbar aparece em TODAS as páginas (barra de navegação de cima) */}
+          <Navbar />
 
-        {/* Uma div para garantir que o conteúdo principal tenha pelo menos 80% da altura da tela */}
-        <div className="min-h-[80vh]">
-          
-          {/* O Routes é o "seletor": ele decide qual página mostrar com base no endereço (URL) */}
-          <Routes>
-            
-            {/* O Route define o caminho: se o endereço for '/', mostre o componente <Home /> */}
-            <Route path="/" element={<Login />} />
-            <Route path="/home" element={<Home />} />
-            <Route path='/cadastro' element={<Cadastro />} />
-            
-          </Routes>
-        </div>
+          {/* Área principal onde as páginas vão aparecer */}
+          {/* min-h-[80vh] → garante que o conteúdo tenha altura mínima boa */}
+          <div className="min-h-[80vh]">
 
-        {/* O Footer também fica fora do <Routes> para sempre aparecer no rodapé, independente da página */}
-        <Footer />
+            {/* Aqui ficam definidas as ROTAS (os endereços do site) */}
+            <Routes>
 
-      </BrowserRouter>
-    </AuthProvider>
+              {/* Quando a pessoa entra no site (endereço /) → mostra a tela de Login */}
+              <Route path="/" element={<Login />} />
+
+              {/* Endereço /home → mostra a página inicial com posts */}
+              <Route path="/home" element={<Home />} />
+
+              {/* Endereço /cadastro → mostra o formulário de cadastro */}
+              <Route path="/cadastro" element={<Cadastro />} />
+
+              {/* Endereço /temas → mostra a Lista de Temas (os cards) */}
+              <Route path="/temas" element={<ListaTemas />} />
+              
+              <Route path="/cadastrartema" element={<FormTema />} />
+
+              <Route path="/editartema/:id" element={<FormTema/>} />
+
+              <Route path="/deletartema/:id" element={<DeletarTema />} />
+
+              <Route path="/postagens" element={<ListaPostagens />} />
+
+              <Route path="/cadastrarpostagem" element={<FormPostagem />} />
+              
+              <Route path="/editarpostagem/:id" element={<FormPostagem />} />
+            </Routes>
+          </div>
+
+          {/* Footer aparece em TODAS as páginas (parte de baixo) */}
+          <Footer />
+
+        </BrowserRouter>
+      </AuthProvider>
     </>
   )
 }
 
-// Exporta o componente App para que ele possa ser usado no arquivo principal (main.tsx ou index.js)
 export default App;

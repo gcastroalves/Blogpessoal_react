@@ -2,69 +2,58 @@ import { createContext, type ReactNode, useState } from "react"
 import type UsuarioLogin from "../models/UsuarioLogin" 
 import { login } from "../services/Service" 
 
-// INTERFACE do contexto de autenticação
-// Define quais propriedades e funções estarão disponíveis no contexto
+// Define a "forma" (interface) do que o contexto vai oferecer para todos
 interface AuthContextProps {
-    usuario: UsuarioLogin           // Dados do usuário logado (ou objeto vazio se não logado)
-    handleLogout(): void            // Função para fazer logout (não retorna nada)
-    handleLogin(usuario: UsuarioLogin): Promise<void> // Função assíncrona para fazer login
-    isLoading: boolean              // Indica se está processando login (mostrar spinner/loading)
+    usuario: UsuarioLogin          // Dados do usuário logado 
+    handleLogout(): void           // Função para deslogar
+    handleLogin(usuario: UsuarioLogin): Promise<void>  // Função para logar
+    isLoading: boolean              // Controla se está carregando (útil pra mostrar spinner)
 }
 
-// INTERFACE para as props do Provider
-// Define que o AuthProvider recebe children (componentes filhos)
+// Define a "forma" (interface) dos props que o AuthProvider vai receber
+// Nesse caso, só recebe "children", que são os componentes filhos que ele vai envolver
 interface AuthProviderProps {
-    children: ReactNode  // ReactNode = qualquer coisa que o React pode renderizar
+    children: ReactNode  
 }
 
-// Criação do Contexto com TypeScript
-// createContext({} as AuthContextProps) = cria contexto com valor inicial vazio
-// O "as AuthContextProps" é uma type assertion para TypeScript
+// Cria o contexto com um valor inicial vazio (será preenchido no AuthProvider)
 export const AuthContext = createContext({} as AuthContextProps)
 
-// COMPONENTE PROVIDER - "Provedor" do contexto
-// Envolve a aplicação/parte dela para fornecer o contexto
+// Componente que vai "embrulhar" toda a aplicação
 export function AuthProvider({ children }: AuthProviderProps) {
-
-    // ESTADO: dados do usuário logado
-    // Inicializado com valores padrão (vazios/zerados = usuário não logado)
+    // Estado que guarda os dados do usuário logado
     const [usuario, setUsuario] = useState<UsuarioLogin>({
         id: 0,
         nome: "",
-        usuario: "",  // username
+        usuario: "",  
         senha: "",
         foto: "",
-        token: ""     // Token JWT para autenticação em requisições futuras
+        token: ""     
     })
 
-    // ESTADO: controle de carregamento durante o login
+    // Estado que indica se está fazendo login (pra mostrar carregando)
     const [isLoading, setIsLoading] = useState(false)
 
-    // FUNÇÃO ASSÍNCRONA: realizar login
-    // Recebe um objeto UsuarioLogin com credenciais
+    // Função principal: faz o login
     async function handleLogin(usuarioLogin: UsuarioLogin) {
-        setIsLoading(true) // Ativa o estado de carregamento
+        setIsLoading(true)  // Começa o carregamento
         
         try {
-            // Chama o serviço de API para login
-            // Parâmetros: endpoint, dados do login, função para atualizar estado
+            //Chama o serviço que conversa com o backend
             await login(`/usuarios/logar`, usuarioLogin, setUsuario)
             
-            // Feedback positivo para o usuário
             alert("O Usuário foi autenticado com sucesso!")
             
         } catch (error) {
-            // Se a API retornar erro (credenciais inválidas, etc.)
-            alert("Os Dados do usuário estão inconsistentes!")
+            alert("Os Dados do usuário não correspondem!")
         }
         
-        setIsLoading(false) // Desativa carregamento (sucesso ou erro)
+        setIsLoading(false) //Terminou (com sucesso ou erro)
     }
 
-    // FUNÇÃO: fazer logout
+    // Função para deslogar o usuário
     function handleLogout() {
-        // Reseta o estado do usuário para valores iniciais
-        // Isso efetivamente "desloga" o usuário
+        // Limpa os dados do usuário (volta ao estado inicial)
         setUsuario({
             id: 0,
             nome: "",
@@ -73,18 +62,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
             foto: "",
             token: ""
         })
-        // NOTA: Em uma implementação real, você também deveria:
-        // 1. Remover token do localStorage/sessionStorage
-        // 2. Invalidar sessão no backend
-        // 3. Redirecionar para página de login
+        
     }
-
-    // RETORNO do Provider
+    //Entrega tudo para os componentes filhos(children)
     return (
-        // AuthContext.Provider "fornece" os valores para componentes filhos
-        // value = objeto com tudo que será disponibilizado no contexto
+        
         <AuthContext.Provider value={{ usuario, handleLogin, handleLogout, isLoading }}>
-            {children}  {/* Renderiza os componentes filhos envolvidos */}
+            {children}  
         </AuthContext.Provider>
     )
 }
