@@ -11,6 +11,7 @@ import FormTema from './components/tema/formtema/FormTema'
 import DeletarTema from './components/tema/deletartema/DeletarTema';
 import ListaPostagens from './components/postagem/listapostagem/ListaPostagem';
 import FormPostagem from './components/postagem/formpostagem/FormPostagem';
+import DeletarPostagem from './components/postagem/deletarpostagem/DeletarPostagem';
 
 
 // Aqui começa a função principal (o "chefe" da aplicação)
@@ -56,6 +57,8 @@ function App() {
               <Route path="/cadastrarpostagem" element={<FormPostagem />} />
               
               <Route path="/editarpostagem/:id" element={<FormPostagem />} />
+
+              <Route path="/deletarpostagem/:id" element={<DeletarPostagem />} />
             </Routes>
           </div>
 

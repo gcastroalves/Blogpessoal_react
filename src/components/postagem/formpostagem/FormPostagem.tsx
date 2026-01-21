@@ -11,11 +11,9 @@ function FormPostagem() {
     const navigate = useNavigate();
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
-
     const [temas, setTemas] = useState<Tema[]>([])
 
     const [tema, setTema] = useState<Tema>({ id: 0, descricao: '', })
-    
     const [postagem, setPostagem] = useState<Postagem>({} as Postagem)
 
     const { usuario, handleLogout } = useContext(AuthContext)
