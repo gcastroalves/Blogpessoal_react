@@ -5,7 +5,7 @@ import axios from "axios"; // Importa o axios para fazer requisições HTTP (GET
 // Criamos uma instância do axios já com o endereço base do nosso backend
 // Assim não precisamos repetir o link longo toda vez que formos fazer uma requisição
 const api = axios.create({
-    baseURL: 'https://blogpessoal-nest-fxxr.onrender.com'
+    baseURL: import.meta.env.VITE_API_URL
 })
 
 // Função para cadastrar usuário novo
