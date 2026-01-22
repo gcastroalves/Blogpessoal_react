@@ -1,6 +1,7 @@
 import { createContext, type ReactNode, useState } from "react"
 import type UsuarioLogin from "../models/UsuarioLogin" 
 import { login } from "../services/Service" 
+import { ToastAlerta } from "../utils/ToastAlerta"
 
 // Define a "forma" (interface) do que o contexto vai oferecer para todos
 interface AuthContextProps {
@@ -41,14 +42,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
         try {
             //Chama o serviço que conversa com o backend
             await login(`/usuarios/logar`, usuarioLogin, setUsuario)
-            
-            alert("O Usuário foi autenticado com sucesso!")
-            
+            ToastAlerta("Usuário foi autenticado com sucesso!", "sucesso")   
+
         } catch (error) {
-            alert("Os Dados do usuário não correspondem!")
+            ToastAlerta("Dados inválidos. Verifique o usuário e a senha.", "erro")
         }
-        
-        setIsLoading(false) //Terminou (com sucesso ou erro)
+            setIsLoading(false) //Terminou (com sucesso ou erro)
     }
 
     // Função para deslogar o usuário

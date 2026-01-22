@@ -1,64 +1,51 @@
-
-// Barra de navegação superior que aparece em quase todas as páginas
-
-import { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useContext, type ReactNode } from "react";
+import { Link, useNavigate } from "react-router-dom"
 import { AuthContext } from "../../contexts/AuthContext";
+import { ToastAlerta } from "../../utils/ToastAlerta";
 
 function Navbar() {
-  // Ferramenta para redirecionar o usuário para outra página pelo código
-  const navigate = useNavigate();
 
-  // Pega APENAS a função de logout que está guardada no AuthContext
-  const { handleLogout } = useContext(AuthContext);
+    const navigate = useNavigate();
 
-  // Função que é chamada quando o usuário clica em "Sair"
-  function logout() {
-    handleLogout();                           // Limpa tudo relacionado ao login
-    alert("Usuário deslogado com sucesso!");  // Mostra mensagem de confirmação
-    navigate("/");                            // Volta para a página inicial (login)
-  }
+    const { usuario, handleLogout } = useContext(AuthContext)
 
-  return (
-    <>
-      {/* Container principal da navbar - ocupa toda a largura */}
-      <div className="w-full flex justify-center py-4 bg-indigo-900 text-white">
+    function logout() {
 
-        {/* Container com largura controlada + espaçamento */}
-        <div className="container flex justify-between text-lg mx-8">
+        handleLogout()
+        ToastAlerta('O Usuário foi desconectado com sucesso!', 'info')
+        navigate('/')
+    }
 
-          {/* Logo / Nome do blog */}
-          {/* Clicar leva para /home */}
-          <Link
-            to="/home"
-            className="text-2xl font-bold"
-          >
-            Blog Pessoal
-          </Link>
+    let component: ReactNode
 
-          {/* Links do lado direito */}
-          <div className="flex gap-4">
-        
-            <Link to='/postagens' className='hover:underline'>Postagens</Link>
+    if (usuario.token !== "") {
 
-            <Link to='/temas' className='hover:underline'>Temas</Link>
+        component = (
 
-            <Link to='/cadastrartema' className='hover:underline'>Cadastrar tema</Link>
+            <div className='w-full flex justify-center py-4
+            			   bg-indigo-900 text-white'>
+            
+                <div className="container flex justify-between text-lg mx-8">
+                    <Link to='/home' className="text-2xl font-bold">Blog Pessoal</Link>
 
-            Perfil
+                    <div className='flex gap-4'>
+                        <Link to='/postagens' className='hover:underline'>Postagens</Link>
+                        <Link to='/temas' className='hover:underline'>Temas</Link>
+                        <Link to='/cadastrartema' className='hover:underline'>Cadastrar tema</Link>
+                        <Link to='/perfil' className='hover:underline'>Perfil</Link>
+                        <Link to='' onClick={logout} className='hover:underline'>Sair</Link>
+                    </div>
+                </div>
+            </div>
 
-            {/* Botão de logout */}
-            {/* to='' é usado só porque é obrigatório no Link */}
-            {/* O comportamento real está no onClick */}
-            <Link to="" onClick={logout}className="hover:underline"
-            >
-              Sair
-            </Link>
-          </div>
-        </div>
-      </div>
-    </>
-  );
+        )
+    }
+
+    return (
+        <>
+            { component }
+        </>
+    )
 }
 
-export default Navbar;
+export default Navbar

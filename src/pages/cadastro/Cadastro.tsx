@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom"; //Para redirecionar o usuário a
 import { ClipLoader } from "react-spinners"; //Spinner de loading
 import type Usuario from "../../models/Usuario";
 import { cadastrarUsuario } from "../../services/Service"; //Função do service que faz o POST /usuarios/cadastrar (backend)
+import { ToastAlerta } from "../../utils/ToastAlerta";
 
 function Cadastro() {
   const navigate = useNavigate();
@@ -58,14 +59,12 @@ function Cadastro() {
         // Chama o serviço que faz POST /usuarios/cadastrar
         // O setUsuario dentro do serviço atualiza o estado com o retorno do backend
         await cadastrarUsuario("/usuarios/cadastrar", usuario, setUsuario);
-        alert("Usuário cadastrado com sucesso!");
+        ToastAlerta("Usuário cadastrado com sucesso!", "success");
       } catch (error) {
-        alert("Erro ao cadastrar o usuário!");
+        ToastAlerta("Erro ao cadastrar o usuário!", "error");
       }
     } else {
-      alert(
-        "Dados do usuário inconsistentes! Verifique as informações do cadastro."
-      );
+      ToastAlerta("Dados do usuário inconsistentes! Verifique as informações do cadastro.", "error");
       // Limpa só as senhas em caso de erro
       setUsuario({ ...usuario, senha: "" });
       setConfirmarSenha("");

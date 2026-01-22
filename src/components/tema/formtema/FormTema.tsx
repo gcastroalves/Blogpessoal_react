@@ -5,6 +5,7 @@ import { ClipLoader } from "react-spinners";
 import { AuthContext } from "../../../contexts/AuthContext";
 import type Tema from "../../../models/Tema";
 import { atualizar, buscar, cadastrar } from "../../../services/Service";
+import { ToastAlerta } from "../../../utils/ToastAlerta";
 
 function FormTema() {
     const navigate = useNavigate();                     // Para redirecionar páginas
@@ -38,7 +39,7 @@ function FormTema() {
     // Proteção: se não tiver token → avisa e manda pra home
     useEffect(() => {
         if (token === '') {
-            alert('Você precisa estar logado!');
+            ToastAlerta('Você precisa estar logado!', 'info');
             navigate('/');
         }
     }, [token]);
@@ -73,18 +74,18 @@ function FormTema() {
                 await atualizar(`/temas`, tema, setTema, {
                     headers: { 'Authorization': token }
                 });
-                alert('O Tema foi atualizado com sucesso!');
+                ToastAlerta('O Tema foi atualizado com sucesso!', 'success');
             } else {                         // Modo CADASTRO
                 await cadastrar(`/temas`, tema, setTema, {
                     headers: { 'Authorization': token }
                 });
-                alert('O Tema foi cadastrado com sucesso!');
+                ToastAlerta('O Tema foi cadastrado com sucesso!', 'success');
             }
         } catch (error: any) {
             if (error.toString().includes('401')) {
                 handleLogout();              // Token inválido → logout
             } else {
-                alert('Erro ao processar o tema.');
+                ToastAlerta('Erro ao processar o tema.', 'error');
             }
         }
 

@@ -12,6 +12,9 @@ import DeletarTema from './components/tema/deletartema/DeletarTema';
 import ListaPostagens from './components/postagem/listapostagem/ListaPostagem';
 import FormPostagem from './components/postagem/formpostagem/FormPostagem';
 import DeletarPostagem from './components/postagem/deletarpostagem/DeletarPostagem';
+import Perfil from './pages/perfil/Perfil';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 
 // Aqui começa a função principal (o "chefe" da aplicação)
@@ -20,6 +23,9 @@ function App() {
     <>
       {/* O AuthProvider "embrulha" tudo → permite que TODAS as páginas saibam se a pessoa está logada */}
       <AuthProvider>
+      
+      <ToastContainer />     
+
 
         {/* BrowserRouter → ativa o sistema de rotas (muda a página sem recarregar o site) */}
         <BrowserRouter>
@@ -59,6 +65,8 @@ function App() {
               <Route path="/editarpostagem/:id" element={<FormPostagem />} />
 
               <Route path="/deletarpostagem/:id" element={<DeletarPostagem />} />
+
+              <Route path="/perfil" element={<Perfil />} />
             </Routes>
           </div>
 

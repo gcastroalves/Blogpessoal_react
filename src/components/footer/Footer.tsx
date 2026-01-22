@@ -1,45 +1,45 @@
-// Importa os ícones das redes sociais da biblioteca Phosphor Icons, apenas os ícones que vamos usar
-import { LinkedinLogoIcon, GithubLogoIcon } from "@phosphor-icons/react"
+import { GithubLogoIcon, LinkedinLogoIcon } from "@phosphor-icons/react"
+import { useContext, type ReactNode } from "react"
+import { AuthContext } from "../../contexts/AuthContext"
 
-// Define o componente Footer
+
 function Footer() {
 
-  let data = new Date().getFullYear()  // Pega o ano atual automaticamente
+    let data = new Date().getFullYear()
 
-  return (
-    <>
-      {/* Footer principal */}
-      <div className="flex justify-center bg-indigo-900 text-white">
-        
-        {/* Container interno */}
-        <div className="container flex flex-col items-center py-4">
+    const { usuario } = useContext(AuthContext)
 
-          {/* Texto do footer */}
-          <p className="text-xl font-bold">
-            Blog Pessoal Generation | Copyright: {data}
-          </p>
+    let component: ReactNode
+    
+        if (usuario.token !== "") {
+    
+            component = ( 
 
-          {/* Texto auxiliar */}
-          <p className="text-lg">
-            Acesse minhas redes profissionais
-          </p>
+                <div className="bg-stone-100 border-t border-neutral-300 py-10 text-center text-sm tracking-wide text-neutral-500">
+                    <div className="container flex flex-col items-center py-4">
+                        <p className='text-xl font-bold'>
+                                Blog Pessoal Generation | Copyright: {data}
+                            </p>
+                        <p className='text-lg'>Acesse nossas redes sociais</p>
+                        <div className='flex gap-2'>
+                        <a href="https://www.linkedin.com/in/gcastroalves/" target="_blank"> 
+                        <LinkedinLogoIcon size={48} weight="bold" /> 
+                            </a>
 
-          {/* Ícones das redes */}
-          <div className="flex gap-2">
+                        <a href="https://github.com/gcastroalves" target="_blank">
+                       <GithubLogoIcon size={48} weight="bold" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
 
-            <a href="https://www.linkedin.com/in/gcastroalves/" target="_blank">
-            <LinkedinLogoIcon size={48} weight="bold" />  {/* Ícone do LinkedIn */}
-            </a>
-
-            <a href="https://github.com/gcastroalves" target="_blank">
-            <GithubLogoIcon size={48} weight="bold" /> {/* Ícone do GitHub */}
-            </a>
-          </div>
-        </div>
-      </div>
-    </>
-  )
+    return (
+        <>
+            { component }
+        </>
+    )
 }
 
-// Exporta o componente
 export default Footer
